@@ -1,0 +1,53 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+spec:
+  tls:
+  - hosts:
+      - api-ds-pagmob.cittamobi.com.br
+	  - digitalservices-pagmob.cittamobi.com.br
+	  - api-integracao-pagmob.cittamobi.com.br
+	  - diadema-pagmob.cittamobi.com.br
+    secretName: testsecret-tls
+  rules:
+  - host: api-ds-pagmob.cittamobi.com.br
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: sd-backend-prd-pagmob
+            port:
+              number: 8080
+  - host: digitalservices-pagmob.cittamobi.com.br
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: sd-front-prd-pagmob
+            port:
+              number: 80
+    - host: api-integracao-pagmob.cittamobi.com.br
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: site-sd-back-prd-pagmob
+            port:
+              number: 8090		
+   - host: diadema-pagmob.cittamobi.com.br
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: site-front-diadema-prd-pagmob
+            port:
+              number: 81
